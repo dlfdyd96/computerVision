@@ -5,11 +5,11 @@ Y = [1, 3, 2]
 
 a = 0.1
 b = 0.0
-#Learning Rate
-LR = 0.1
+#Learning Rate 크게할수록 정답에 가까워짐
+LR = 0.5
 
 Loss = []
-for k in range(100): #반복횟수
+for k in range(50): #반복횟수
     delta_a = 0
     delta_b = 0
     #lost(에러)가 얼마나 줄어드는지
@@ -21,9 +21,12 @@ for k in range(100): #반복횟수
         E += (Y[i] - yHat)**2
         E /= 2
     Loss.append(E)
+    # 샘플의 갯수상관없이 일관성있게 하기위해 평균을낸다.
+    delta_a /= 3
+    delta_b /= 3
     a = a + delta_a
     b = b + delta_b
-    print('{0} : a={1:0.4f} b={2:0.4f}, loss={3:0.8f}'.format(k, a, b, E))
+    print('{0} : a={1:0.2f} b={2:0.2f}, loss={3:0.8f}'.format(k, a, b, E))
 
 import matplotlib.pyplot as plt
 plt.figure(figsize=(10, 4))
