@@ -50,7 +50,8 @@ loss = -y * tf.log(yhat) - (1-y) * tf.log(1-yhat) # y는 4x1 yhat도 4x1
 loss = tf.reduce_mean(loss) # 이것들의 평균을 낸다.
 
 ##### 이 loss에 대해서 최적화를 한다.
-optimizer = tf.train.GradientDescentOptimizer(learning_rate)    # 경사하강법을 쓴다. (파라미터로 learning_rate)
+#optimizer = tf.train.GradientDescentOptimizer(learning_rate)    # 경사하강법을 쓴다. (파라미터로 learning_rate)
+optimizer = tf.train.AdamOptimizer(learning_rate)
 
 ##### 이제 이 optimizer를 최소화하는 것을 반복해준다.
 train = optimizer.minimize(loss)
@@ -79,14 +80,14 @@ sess.run(tf.global_variables_initializer())
  # 반복을 위해 EPOCH을 300준다.
 
 Loss = []
-EPOCH =50000
+EPOCH = 200
 for i in range(EPOCH):
     outs = sess.run([train, loss, yhat, accuracy], feed_dict={x: x_data, y: y_data})   # ([계산을 해야할 것 들], x와 y의 data를 준다.)
     print(f'i : {i}, loss : {outs[1]}, accuracy : {outs[3]}')
     Loss.append(outs[1])
 
 
-plt.plot(Loss[1000:])
+plt.plot(Loss[:])
 plt.show()
 
 sess.close()
