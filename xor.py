@@ -78,10 +78,16 @@ sess = tf.Session()
 sess.run(tf.global_variables_initializer())
  # 반복을 위해 EPOCH을 300준다.
 
-EPOCH =300
-for i in range(300):
+Loss = []
+EPOCH =50000
+for i in range(EPOCH):
     outs = sess.run([train, loss, yhat, accuracy], feed_dict={x: x_data, y: y_data})   # ([계산을 해야할 것 들], x와 y의 data를 준다.)
     print(f'i : {i}, loss : {outs[1]}, accuracy : {outs[3]}')
+    Loss.append(outs[1])
+
+
+plt.plot(Loss[1000:])
+plt.show()
 
 sess.close()
     
@@ -96,5 +102,20 @@ Hyper Parameter
  
 결과
  - 뒤로갈수록 정확도가 떨어졌다.
+Loss 
+ - 떨어짐 : Epoch를 늘린다. => 1000번정도
 
+2. 
+Epoch 1000
+결과
+ - 수렴 0.5 ㅠㅠ
+3.
+Epoch 50000
+결과
+ - accuracy : 1.0 !!!
+ - Loss는 0.05대로 떨어짐
+
+결론. Loss그래프를 보고 학습을 더해야할지 말아야할지 판단할 수 있다
+    iter를 많이 했음에도 불구하고 loss가 안떨어진다면 learning_rate를 좀더 작게할 필요가 있다.
+    하나더, 50000번을 돌렸더니 loss가 굉장히 떨어졌지만 이전의 EPOCH에 대해서는 잘 나타낼지는 미지수다.
 '''
