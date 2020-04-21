@@ -24,18 +24,24 @@ y_test = one_hot(y_test, 10)
 
 # 하이퍼 파라미터
 learning_rate = 0.05
+NODES = 100
 
 # 네트워크 설계
 x = tf.placeholder(dtype=tf.float32, shape=[None, 784], name='input') # [None, 784] : sample 몇개인지 몰라도 알아서 다됨 & 입력은 784
 y = tf.placeholder(dtype=tf.float32, shape=[None, 10], name='target')
 
-w = tf.Variable(tf.truncated_normal(shape=[784, 10], stddev=0.1), name='weight') # initializer tensor를 썻는데 저것을 쓰자.
-b = tf.Variable(tf.zeros(shape=[10], dtype=tf.float32), name='bias')
-z = tf.matmul(x, w) + b
-yhat = tf.nn.softmax(z)
+w1 = tf.Variable(tf.truncated_normal(shape=[784, NODES], stddev=0.1), name='weight')
+b1 = tf.Variable(tf.zeros(shape=[NODES], dtype=tf.float32), name='bias')
+z1 = tf.matmul(x, w1) + b1
+a1 = tf.sigmoid(z1)
+
+w2 = tf.Variable(tf.truncated_normal(shape=[NODES, 10], stddev=0.1), name='weight2')
+b2 = tf.Variable(tf.zeros(shape=[10]), name='bias2')
+z2 = tf.matmul(a1, w2) + b2
+yhat = tf.nn.softmax(z2)
 
 # 손실함수, 최적화방법 결정
-loss = tf.nn.softmax_cross_entropy_with_logits_v2(labels=y, logits=z)
+loss = tf.nn.softmax_cross_entropy_with_logits_v2(labels=y, logits=z2)
 loss = tf.reduce_mean(loss)
 optimizer = tf.train.GradientDescentOptimizer(learning_rate)
 train = optimizer.minimize(loss)
@@ -54,7 +60,7 @@ sess.run(init)
 # ex 6만개중에 10개를 확률 적으로 뽑아서 GradentDescent 적용 -> Stocastic Gradient Descent Method 라고 함.
 # local Minimum에 빠지는 것을 막아주는 효과가 있다.
 EPOCH = 50
-BATCH = 1000
+BATCH = 100
 train_samples = x_train.shape[0]
 steps = train_samples // BATCH # =60번
 
@@ -73,13 +79,11 @@ loss_test = []
 accuracy_test = []
 
 
-loss_batch = []
-accuracy_batch = []
 
 for epoch in range(1, EPOCH + 1):
     # 학습
-    # loss_batch = []
-    # accuracy_batch = []
+    loss_batch = []
+    accuracy_batch = []
 
     for step in range(steps):
         x_batch = x_train_batch[step]
@@ -108,10 +112,6 @@ for epoch in range(1, EPOCH + 1):
 sess.close()
 
 
-plt.plot(loss_batch, 'b')
-plt.show()
-
-'''
 plt.plot(loss_epoch, 'r')
 plt.plot(loss_test, 'b')
 plt.show()
@@ -120,4 +120,3 @@ plt.plot(accuracy_epoch, 'r')
 plt.plot(accuracy_test, 'b')
 
 plt.show()
-'''

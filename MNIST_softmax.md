@@ -73,3 +73,38 @@ Memory만 허용된다면 Batch사이즈를 크게 처리하면 병렬로 처리
 `train` loss=0.26323506, accuracy=0.92760<br>
 `test` loss=0.26551130, accuracy=0.95000<br>
 오래걸린다.
+
+
+# Experiment 3
+## Hyper Parameter
+- learning rate : 0.05
+- EPOCH : 1
+- BATCH : 1000
+- STEP : 60
+
+## Result
+- Loss 그래프
+![loss](exp/E1_B1000_Loss.png)<p>
+
+## Conclusion
+들쭉 날쭉한 그래프를 볼 수 있다.
+학습을 시킬 때, EPOCH를 충분히 크게 할 때는 EPCOH 단위로 그래프를 확인하면 되고<br>
+여의치 안되면 step 단위로 loss를 확인할 수 있는데, batch가 어떤 녀석인지에 따라서 들쭉 날쭉하게 나올 수 있다.<br>
+스텝을 누적시키면 전체적으로 부드러운 곡선이 나올 수 있다.
+
+
+# Experiment 4
+## Hyper Parameter
+- learning rate : 0.05
+- EPOCH : 50
+- BATCH : 1000
+- STEP : 60
+
+## Result
+- Loss 그래프
+![loss](exp/E50_B1000_One_Step.png)<p>
+
+## Conclusion
+가운데에 선을 그리면 평균으로 보고. 처음에 봤던 EPOCH 단위으 loss 그래프와 유사하게 나온다.
+<br>
+Loss 그래프를 확인할 때는, 데이터 상황에 맞게 Step 단위로 볼껀지 EPOCH 단위로 볼껀지 선택하면 될 것 이다.
