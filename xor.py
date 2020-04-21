@@ -16,8 +16,8 @@ tf.set_random_seed(123)
 learning_rate = 0.01
 
 # 제일먼저 할일 x-data를 담을 x-tensor를 만드는 것
-x = tf.placeholder(tf.float32, shape=(None, 2)) # shape=(4, 2) None하면 자동으로 설정됨
-y = tf.placeholder(tf.float32, shape=(None, 2))
+x = tf.placeholder(tf.float32, shape=[None, 2]) # shape=(4, 2) None하면 자동으로 설정됨
+y = tf.placeholder(tf.float32, shape=[None, 2])
 
 # Weight 설정
 # hidden Node의 weight : 입력2개, hidden Layer의 Node(출력)가 3개
