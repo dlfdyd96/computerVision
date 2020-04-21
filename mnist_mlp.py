@@ -14,10 +14,12 @@ def one_hot(labels, targets=10):
 mnist = tf.keras.datasets.mnist.load_data(path='mnist.npz')
 train = mnist[0]
 test = mnist[1]
-x_train = train[0]/255.0
+x_train = train[0].astype(np.float32) / 255.0
 y_train = train[1]
-x_test = test[0]/255.0
+x_test = test[0].astype(np.float32) / 255.0
 y_test = test[1]
+
+print(x_train.shape)
 
 y_train = one_hot(y_train, 10)
 y_test = one_hot(y_test, 10)
@@ -32,11 +34,13 @@ y = tf.placeholder(dtype=tf.float32, shape=[None, 10], name='target')
 
 w1 = tf.Variable(tf.truncated_normal(shape=[784, NODES], stddev=0.1), name='weight')
 b1 = tf.Variable(tf.zeros(shape=[NODES], dtype=tf.float32), name='bias')
-z1 = tf.matmul(x, w1) + b1
-a1 = tf.sigmoid(z1)
 
 w2 = tf.Variable(tf.truncated_normal(shape=[NODES, 10], stddev=0.1), name='weight2')
 b2 = tf.Variable(tf.zeros(shape=[10]), name='bias2')
+
+z1 = tf.matmul(x, w1) + b1
+a1 = tf.sigmoid(z1) # 학습이 안될 수 도 있다.
+
 z2 = tf.matmul(a1, w2) + b2
 yhat = tf.nn.softmax(z2)
 
@@ -59,8 +63,8 @@ sess.run(init)
 # 그룹(batch)을 지어서 학습 하는 것이 추세. (local minimum에 빠질 위험이 적음)
 # ex 6만개중에 10개를 확률 적으로 뽑아서 GradentDescent 적용 -> Stocastic Gradient Descent Method 라고 함.
 # local Minimum에 빠지는 것을 막아주는 효과가 있다.
-EPOCH = 50
-BATCH = 100
+EPOCH = 30
+BATCH = 1
 train_samples = x_train.shape[0]
 steps = train_samples // BATCH # =60번
 
