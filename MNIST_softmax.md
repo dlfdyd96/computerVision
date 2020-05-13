@@ -27,7 +27,7 @@ local Minimum에 빠지는 것을 막아주는 효과가 있다.
 
 ## Result
 - Loss 그래프
-![loss](exp/Figure_1.png)<p>
+![loss](./exp/Figure_1.png)<p>
 빨간선 : Train Data<br>
 파란선 : Test Data<br>
 

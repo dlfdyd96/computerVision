@@ -19,8 +19,6 @@ y_train = train[1]
 x_test = test[0].astype(np.float32) / 255.0
 y_test = test[1]
 
-print(x_train.shape)
-
 y_train = one_hot(y_train, 10)
 y_test = one_hot(y_test, 10)
 
@@ -63,8 +61,8 @@ sess.run(init)
 # 그룹(batch)을 지어서 학습 하는 것이 추세. (local minimum에 빠질 위험이 적음)
 # ex 6만개중에 10개를 확률 적으로 뽑아서 GradentDescent 적용 -> Stocastic Gradient Descent Method 라고 함.
 # local Minimum에 빠지는 것을 막아주는 효과가 있다.
-EPOCH = 30
-BATCH = 1
+EPOCH = 50
+BATCH = 100
 train_samples = x_train.shape[0]
 steps = train_samples // BATCH # =60번
 
